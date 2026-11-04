@@ -505,9 +505,21 @@ export default function App() {
   const [logoUrl, setLogoUrl] = useState(() => safeStorage.getItem('niras_logo_url') || '');
   const fileInputRef = useRef(null);
 
-  // Two separate leaderboards
-  const [elektroLeaderboard, setElektroLeaderboard] = useState([]);
-  const [byggLeaderboard, setByggLeaderboard] = useState([]);
+  // Leaderboards persist on the display browser until manually cleared.
+  const [elektroLeaderboard, setElektroLeaderboard] = useState(() => {
+    try { return JSON.parse(safeStorage.getItem('standquiz_elektro_leaderboard') || '[]'); } catch { return []; }
+  });
+  const [byggLeaderboard, setByggLeaderboard] = useState(() => {
+    try { return JSON.parse(safeStorage.getItem('standquiz_bygg_leaderboard') || '[]'); } catch { return []; }
+  });
+
+  useEffect(() => {
+    safeStorage.setItem('standquiz_elektro_leaderboard', JSON.stringify(elektroLeaderboard));
+  }, [elektroLeaderboard]);
+
+  useEffect(() => {
+    safeStorage.setItem('standquiz_bygg_leaderboard', JSON.stringify(byggLeaderboard));
+  }, [byggLeaderboard]);
 
   // Mobile Quiz & Simulator State
   const [step, setStep] = useState('start'); // 'start', 'quiz', 'result'
@@ -581,7 +593,12 @@ export default function App() {
           const payload = JSON.parse(event.data);
           if (payload && payload.message) {
             const entry = JSON.parse(payload.message);
-            if (entry && entry.name && entry.track) {
+            if (entry && entry.action === 'reset_leaderboards') {
+              setElektroLeaderboard([]);
+              setByggLeaderboard([]);
+              safeStorage.setItem('standquiz_elektro_leaderboard', '[]');
+              safeStorage.setItem('standquiz_bygg_leaderboard', '[]');
+            } else if (entry && entry.name && entry.track) {
               if (entry.track === 'bygg') {
                 setByggLeaderboard((prev) => updateAndSortByggList(prev, entry));
               } else {
@@ -599,6 +616,25 @@ export default function App() {
       if (eventSource) eventSource.close();
     };
   }, []);
+
+  const handleResetLeaderboards = async () => {
+    if (!window.confirm('Vil du nullstille begge topplistene? Dette kan ikke angres.')) return;
+
+    setElektroLeaderboard([]);
+    setByggLeaderboard([]);
+    safeStorage.setItem('standquiz_elektro_leaderboard', '[]');
+    safeStorage.setItem('standquiz_bygg_leaderboard', '[]');
+
+    try {
+      await fetch(`https://ntfy.sh/${NTFY_TOPIC}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'reset_leaderboards', timestamp: Date.now() })
+      });
+    } catch (err) {
+      console.warn('Could not broadcast leaderboard reset:', err);
+    }
+  };
 
   const updateAndSortElektroList = (list, newEntry) => {
     const updated = [...list, { ...newEntry, id: Math.random().toString() }];
@@ -872,10 +908,17 @@ export default function App() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <div className="flex items-center gap-2.5 bg-slate-900 px-5 py-3 rounded-full border border-slate-800 text-sm text-slate-300 font-mono shadow-lg">
               <span className="w-3 h-3 rounded-full bg-green-500 animate-ping"></span> Live-synkronisert
             </div>
+            <button
+              type="button"
+              onClick={handleResetLeaderboards}
+              className="flex items-center gap-2 bg-red-950/70 hover:bg-red-900 text-red-200 font-bold px-4 py-3 rounded-full border border-red-500/50 transition-all text-sm shadow-lg"
+            >
+              <RefreshIcon className="w-4 h-4" /> Nullstill topplister
+            </button>
           </div>
         </header>
 
