@@ -309,6 +309,97 @@ const APP_THEME_CSS = `
   @media (prefers-reduced-motion: reduce) {
     .standquiz-shell *, .standquiz-shell *::before, .standquiz-shell *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
   }
+
+  /* Clean, high-impact stand display: two equal challenge panels. */
+  .stand-v2 {
+    box-sizing: border-box;
+    min-height: 100vh;
+    padding: 22px;
+    color: #f8fafc;
+    background: radial-gradient(ellipse at 50% -20%, rgba(37,99,235,.25), transparent 55%), linear-gradient(135deg,#050b18,#0b1426 60%,#071426);
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  }
+  .stand-v2-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    min-height: 96px;
+    padding: 0 4px 18px;
+    border-bottom: 1px solid rgba(148,163,184,.25);
+  }
+  .stand-v2-brand { flex: 0 0 auto; cursor: pointer; }
+  .stand-v2-brand img { display:block; max-width:230px; max-height:70px; object-fit:contain; }
+  .stand-v2-wordmark { display:flex; flex-direction:column; line-height:1; }
+  .stand-v2-wordmark span { color:#fbbf24; font-size:17px; font-weight:900; letter-spacing:.28em; }
+  .stand-v2-wordmark strong { margin-top:7px; color:white; font-size:21px; letter-spacing:-.04em; }
+  .stand-v2-headline { min-width:0; flex:1; }
+  .stand-v2-headline h1 { margin:0; font-size:clamp(24px,2vw,38px); line-height:1.1; font-weight:950; letter-spacing:-.04em; }
+  .stand-v2-headline p { margin:7px 0 0; color:#aebdd0; font-size:16px; }
+  .stand-v2-actions { display:flex; align-items:center; gap:12px; }
+  .stand-v2-live { display:flex; align-items:center; gap:9px; padding:10px 15px; border:1px solid rgba(34,197,94,.3); border-radius:999px; color:#bbf7d0; background:rgba(20,83,45,.3); font-size:13px; font-weight:900; letter-spacing:.12em; }
+  .stand-v2-live i { width:9px; height:9px; border-radius:50%; background:#4ade80; box-shadow:0 0 12px #4ade80; }
+  .stand-v2-actions button { display:flex; align-items:center; gap:8px; padding:10px 14px; border:1px solid rgba(248,113,113,.35); border-radius:999px; color:#fecaca; background:rgba(127,29,29,.35); font-size:13px; font-weight:800; }
+  .stand-v2-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; padding-top:20px; }
+  .stand-v2-track { display:grid; grid-template-columns:minmax(250px, .82fr) minmax(0,1.18fr); min-width:0; gap:16px; padding:18px; border:1px solid rgba(148,163,184,.24); border-radius:24px; background:linear-gradient(145deg,rgba(15,31,55,.98),rgba(7,16,31,.98)); box-shadow:0 20px 60px rgba(0,0,0,.28); }
+  .sky-track { border-top:3px solid #38bdf8; }
+  .amber-track { border-top:3px solid #f59e0b; }
+  .stand-v2-qr-panel { display:flex; flex-direction:column; align-items:center; justify-content:center; min-width:0; text-align:center; }
+  .stand-v2-track-title { display:flex; align-items:center; justify-content:center; gap:10px; }
+  .stand-v2-track-title span { font-size:27px; }
+  .stand-v2-track-title h2 { margin:0; color:white; font-size:clamp(18px,1.3vw,25px); font-weight:950; letter-spacing:-.025em; }
+  .stand-v2-qr-panel > p { margin:7px 0 14px; color:#b8c6d8; font-size:14px; }
+  .stand-v2-qr-frame { display:flex; align-items:center; justify-content:center; width:min(100%,330px); padding:12px; border-radius:20px; background:white; box-shadow:0 0 0 5px rgba(255,255,255,.06),0 15px 45px rgba(0,0,0,.35); }
+  .stand-v2-qr-frame img { display:block; width:100%; aspect-ratio:1; object-fit:contain; image-rendering:pixelated; }
+  .stand-v2-scan { margin-top:15px; color:#dbeafe; font-size:11px; font-weight:900; letter-spacing:.12em; }
+  .amber-track .stand-v2-scan { color:#fde68a; }
+  .stand-v2-board { display:flex; flex-direction:column; min-width:0; min-height:0; }
+  .stand-v2-board-head { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:2px 2px 12px; border-bottom:1px solid rgba(148,163,184,.2); }
+  .stand-v2-eyebrow { margin-bottom:3px; font-size:10px; font-weight:900; letter-spacing:.18em; }
+  .stand-v2-eyebrow.sky { color:#7dd3fc; }
+  .stand-v2-eyebrow.amber { color:#fcd34d; }
+  .stand-v2-board-head h2 { margin:0; color:white; font-size:clamp(16px,1.15vw,22px); font-weight:900; }
+  .stand-v2-count { padding:5px 9px; border-radius:999px; color:#cbd5e1; background:rgba(15,23,42,.9); font-size:12px; font-weight:800; }
+  .stand-v2-list { display:flex; flex-direction:column; gap:7px; padding-top:10px; }
+  .stand-v2-row { display:flex; align-items:center; min-width:0; min-height:49px; gap:10px; padding:5px 10px; border:1px solid rgba(148,163,184,.13); border-radius:12px; background:rgba(2,8,23,.55); }
+  .stand-v2-row.first { border-color:rgba(250,204,21,.4); background:linear-gradient(90deg,rgba(250,204,21,.12),rgba(2,8,23,.55)); }
+  .stand-v2-rank { display:flex; flex:0 0 30px; align-items:center; justify-content:center; width:30px; height:30px; border-radius:50%; color:#cbd5e1; background:#1e293b; font-size:14px; font-weight:900; }
+  .stand-v2-rank.gold { color:#111827; background:#facc15; }
+  .stand-v2-rank.silver { color:#111827; background:#cbd5e1; }
+  .stand-v2-rank.bronze { color:white; background:#b45309; }
+  .stand-v2-name { flex:1; min-width:0; overflow:hidden; color:#f8fafc; font-size:clamp(13px,.95vw,17px); font-weight:750; text-overflow:ellipsis; white-space:nowrap; }
+  .stand-v2-score { flex:0 0 auto; font-size:clamp(14px,1vw,18px); font-weight:950; }
+  .stand-v2-metric { flex:0 0 auto; min-width:56px; text-align:right; color:#cbd5e1; font-size:12px; font-variant-numeric:tabular-nums; }
+  .sky-track .stand-v2-score { color:#7dd3fc; }
+  .amber-track .stand-v2-score { color:#fcd34d; }
+  .stand-v2-empty { display:flex; flex:1; min-height:250px; flex-direction:column; align-items:center; justify-content:center; text-align:center; color:#94a3b8; }
+  .stand-v2-empty span { margin-bottom:12px; font-size:42px; }
+  .stand-v2-empty strong { color:#e2e8f0; font-size:18px; }
+  .stand-v2-empty p { margin:6px 0 0; font-size:13px; }
+  @media (min-width:1200px) and (min-height:760px) {
+    .stand-v2 { height:100vh; min-height:0; overflow:hidden; padding:20px 26px; }
+    .stand-v2-header { min-height:88px; height:88px; padding-bottom:12px; }
+    .stand-v2-grid { height:calc(100% - 108px); min-height:0; padding-top:18px; gap:18px; }
+    .stand-v2-track { min-height:0; height:100%; grid-template-columns:minmax(245px,.82fr) minmax(0,1.18fr); gap:14px; padding:16px; }
+    .stand-v2-qr-frame { width:min(100%, min(330px, 34vh)); }
+    .stand-v2-list { gap:7px; }
+    .stand-v2-row { min-height:clamp(43px,5.2vh,56px); }
+  }
+  @media (max-width:1199px) {
+    .stand-v2-header { flex-wrap:wrap; }
+    .stand-v2-grid { grid-template-columns:1fr; }
+    .stand-v2-track { min-height:560px; }
+  }
+  @media (max-width:700px) {
+    .stand-v2 { padding:14px; }
+    .stand-v2-header { gap:12px; }
+    .stand-v2-brand img { max-width:130px; }
+    .stand-v2-wordmark strong { font-size:14px; }
+    .stand-v2-headline h1 { font-size:22px; }
+    .stand-v2-headline p { font-size:12px; }
+    .stand-v2-actions { width:100%; justify-content:space-between; }
+    .stand-v2-track { grid-template-columns:1fr; min-height:0; }
+    .stand-v2-qr-frame { width:min(100%,260px); }
+  }
 `;
 
 const NTFY_TOPIC = 'itb-bygg-stand-quiz-2026-v5';
@@ -1096,245 +1187,89 @@ export default function App() {
   }
 
   if (mode === 'screen') {
-    return (
-      <div className="standquiz-shell standquiz-screen min-h-screen bg-slate-950 text-slate-100 flex flex-col p-6 font-sans overflow-x-hidden">
-        <style>{APP_THEME_CSS}</style>
-        {/* Header with Prominent NIRAS Logo (No action buttons) */}
-        <header className="flex flex-wrap items-center justify-between pb-6 border-b border-slate-800 mb-6 gap-4">
-          <div className="flex items-center gap-6">
-            <input 
-              type="file" 
-              ref={fileInputRef} 
-              accept="image/*" 
-              onChange={handleLogoUpload} 
-              className="hidden" 
-            />
-            
-            {/* Clickable area to set logo silently without showing action buttons */}
-            <div 
-              onClick={() => fileInputRef.current && fileInputRef.current.click()}
-              className="cursor-pointer transition-transform hover:scale-102 flex items-center"
-              title="Klikk her for å velge logo-fil"
-            >
-              {logoUrl ? (
-                <img 
-                  src={logoUrl} 
-                  alt="NIRAS Logo" 
-                  className="h-28 md:h-36 max-w-[450px] object-contain bg-slate-900/90 p-3.5 rounded-2xl border-2 border-slate-700 shadow-2xl" 
-                />
-              ) : (
-                <div className="flex items-center gap-4 bg-slate-900 px-8 py-5 rounded-3xl border-2 border-amber-500/50 shadow-2xl">
-                  <AlertTriangleIcon className="w-14 h-14 text-amber-400" />
-                  <div>
-                    <span className="text-2xl font-black tracking-widest text-amber-500 uppercase block">NIRAS</span>
-                    <h1 className="text-4xl font-black text-white tracking-tight">STUDENTUTFORDRING</h1>
-                  </div>
-                </div>
-              )}
-            </div>
-
+    const renderLeaderboard = (entries, type) => {
+      const isElektro = type === 'elektro';
+      const accent = isElektro ? 'text-sky-300' : 'text-amber-300';
+      const scoreColor = isElektro ? 'text-sky-300' : 'text-amber-300';
+      return (
+        <div className="stand-v2-board">
+          <div className="stand-v2-board-head">
             <div>
-              {logoUrl && <h1 className="text-4xl font-black text-white tracking-tight">NIRAS STUDENTUTFORDRING</h1>}
-              <p className="text-slate-400 text-base mt-1">Test faget, utfordre kollegaene og sett navnet ditt på dagens toppliste!</p>
+              <div className={isElektro ? 'stand-v2-eyebrow sky' : 'stand-v2-eyebrow amber'}>DAGENS TOPPLISTE</div>
+              <h2>{isElektro ? 'Elektro & ITB' : 'Bygg & Statikk'}</h2>
             </div>
+            <span className="stand-v2-count">{entries.length}/10</span>
           </div>
+          <div className="stand-v2-list">
+            {entries.length === 0 ? (
+              <div className="stand-v2-empty">
+                <span>{isElektro ? '⚡' : '🏗️'}</span>
+                <strong>Topplisten venter på deg</strong>
+                <p>Bli den første som setter dagens rekord!</p>
+              </div>
+            ) : entries.slice(0, 10).map((entry, idx) => (
+              <div key={entry.id || idx} className={idx === 0 ? 'stand-v2-row first' : 'stand-v2-row'}>
+                <div className={idx === 0 ? 'stand-v2-rank gold' : idx === 1 ? 'stand-v2-rank silver' : idx === 2 ? 'stand-v2-rank bronze' : 'stand-v2-rank'}>
+                  {idx + 1}
+                </div>
+                <div className="stand-v2-name">{entry.name || 'Anonym deltaker'}</div>
+                <div className={'stand-v2-score ' + scoreColor}>{entry.score}/{isElektro ? 11 : 12}</div>
+                <div className="stand-v2-metric">{isElektro ? (entry.timeUsed || 0) + ' sek' : ((entry.distanceMeters || 0).toFixed(1) + ' m')}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    };
 
-          <div className="flex flex-wrap items-center gap-3">
-            <div className="flex items-center gap-2.5 bg-slate-900 px-5 py-3 rounded-full border border-slate-800 text-sm text-slate-300 font-mono shadow-lg">
-              <span className="w-3 h-3 rounded-full bg-green-500 animate-ping"></span> Live-synkronisert
+    const renderTrack = (type) => {
+      const isElektro = type === 'elektro';
+      const title = isElektro ? 'ELEKTRO & ITB' : 'BYGG & STATIKK';
+      const qr = isElektro ? elektroQrUrl : byggQrUrl;
+      const subtitle = isElektro ? 'Brannalarm og bygningsautomasjon' : 'Brobygging og bæreevne';
+      return (
+        <section className={isElektro ? 'stand-v2-track sky-track' : 'stand-v2-track amber-track'}>
+          <div className="stand-v2-qr-panel">
+            <div className="stand-v2-track-title">
+              <span>{isElektro ? '⚡' : '🏗️'}</span>
+              <h2>{title}</h2>
             </div>
-            <button
-              type="button"
-              onClick={handleResetLeaderboards}
-              className="flex items-center gap-2 bg-red-950/70 hover:bg-red-900 text-red-200 font-bold px-4 py-3 rounded-full border border-red-500/50 transition-all text-sm shadow-lg"
-            >
-              <RefreshIcon className="w-4 h-4" /> Nullstill topplister
-            </button>
+            <p>{subtitle}</p>
+            <div className="stand-v2-qr-frame">
+              <img src={qr} alt={'QR-kode for ' + title} />
+            </div>
+            <div className="stand-v2-scan">SKANN QR-KODEN · START UTFORDRINGEN</div>
+          </div>
+          {renderLeaderboard(isElektro ? elektroLeaderboard : byggLeaderboard, type)}
+        </section>
+      );
+    };
+
+    return (
+      <div className="standquiz-shell stand-v2">
+        <style>{APP_THEME_CSS}</style>
+        <header className="stand-v2-header">
+          <input type="file" ref={fileInputRef} accept="image/*" onChange={handleLogoUpload} className="hidden" />
+          <div className="stand-v2-brand" onClick={() => fileInputRef.current && fileInputRef.current.click()} title="Klikk for å velge logo">
+            {logoUrl ? (
+              <img src={logoUrl} alt="NIRAS-logo" />
+            ) : (
+              <div className="stand-v2-wordmark"><span>NIRAS</span><strong>STUDENTUTFORDRING</strong></div>
+            )}
+          </div>
+          <div className="stand-v2-headline">
+            <h1>Velg din utfordring</h1>
+            <p>Skann QR-koden, test deg selv og kom på dagens toppliste.</p>
+          </div>
+          <div className="stand-v2-actions">
+            <div className="stand-v2-live"><i /> LIVE</div>
+            <button type="button" onClick={handleResetLeaderboards}><RefreshIcon className="w-4 h-4" /> Nullstill</button>
           </div>
         </header>
-
-        {/* Explanatory Info Banner Top - High Legibility for Large Screen */}
-        <div className="standquiz-intro mb-8 bg-slate-900/95 border-2 border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="flex items-start gap-5 bg-blue-950/60 p-6 rounded-2xl border-2 border-blue-500/40 shadow-xl">
-            <div className="p-4 bg-blue-500/20 rounded-2xl border border-blue-400/40 flex-shrink-0">
-              <ZapIcon className="w-10 h-10 text-blue-400" />
-            </div>
-            <div className="space-y-2">
-              <h3 className="font-black text-blue-400 text-xl md:text-2xl tracking-wide">
-                ⚡ Elektro & ITB-utfordringen
-              </h3>
-              <p className="text-base md:text-lg text-slate-100 font-medium leading-relaxed">
-                Test kunnskapene dine om bygningsautomasjon! Identifiser hvilke tekniske bygningssystemer som skal påvirkes eller gå i brannmodus når brannalarmen utløses. Flest riktige på kortest tid vinner!
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-5 bg-amber-950/60 p-6 rounded-2xl border-2 border-amber-500/40 shadow-xl">
-            <div className="p-4 bg-amber-500/20 rounded-2xl border border-amber-400/40 flex-shrink-0">
-              <BuildingIcon className="w-10 h-10 text-amber-400" />
-            </div>
-            <div className="space-y-2">
-              <h3 className="font-black text-amber-400 text-xl md:text-2xl tracking-wide">
-                🏗️ Bygg & Statikk-utfordringen
-              </h3>
-              <p className="text-base md:text-lg text-slate-100 font-medium leading-relaxed">
-                Test ferdighetene dine som ingeniør! Velg bæresystem, materiale, opplegg, dekketype og profiltykkelse for å dimensjonere en bro som tåler at en 24-tonns lastebil kjører helt over gjelet.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* 3-Column Layout: QR Left - Leaderboards Middle - QR Right */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1 items-start">
-          
-          {/* LEFT COLUMN: Elektro QR Code */}
-          <div className="lg:col-span-4 flex flex-col items-center">
-            <div className="standquiz-qr-card w-full bg-blue-950/60 rounded-3xl p-6 border-2 border-blue-500/40 shadow-2xl flex flex-col items-center text-center">
-              <div className="flex items-center gap-2 mb-2 text-blue-400 font-bold text-xl">
-                <ZapIcon className="w-7 h-7" /> Elektro & ITB
-              </div>
-              <p className="text-slate-200 text-sm mb-4 min-h-[32px]">
-                Skann for oppgave om brann- og bygningsautomasjon
-              </p>
-              <div className="standquiz-qr-code bg-white p-4 rounded-2xl shadow-inner border-2 border-blue-500 mb-4 w-full flex justify-center">
-                <img src={elektroQrUrl} alt="QR Elektro" className="standquiz-qr-image w-60 h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 object-contain" />
-              </div>
-              <span className="text-xs font-mono text-blue-300 bg-blue-950 px-4 py-1.5 rounded-full border border-blue-800/50 font-semibold">
-                ⚡ Elektro-løype
-              </span>
-            </div>
-          </div>
-
-          {/* CENTER COLUMN: Leaderboards Stacked Vertically */}
-          <div className="lg:col-span-4 flex flex-col gap-6">
-            
-            {/* Elektro Leaderboard */}
-            <div className="standquiz-leaderboard bg-blue-950/60 rounded-3xl p-5 border-2 border-blue-500/40 shadow-2xl flex flex-col">
-              <div className="flex items-center justify-between mb-3 pb-2 border-b border-blue-800/50">
-                <div className="flex items-center gap-2 text-blue-400">
-                  <TrophyIcon className="w-6 h-6 text-yellow-400" />
-                  <h2 className="text-lg font-bold text-white">🏆 Dagens faglige legender · Elektro & ITB</h2>
-                </div>
-                <span className="text-xs font-mono text-blue-300 bg-blue-950 px-2.5 py-0.5 rounded-full border border-blue-700/50">
-                  Maks 11p
-                </span>
-              </div>
-
-              <div className="standquiz-leaderboard-list space-y-1 pr-1">
-                {elektroLeaderboard.length === 0 ? (
-                  <div className="py-8 flex flex-col items-center justify-center text-slate-400 text-xs">
-                    <ZapIcon className="w-8 h-8 mb-1 opacity-40" />
-                    Venter på dagens første elektro-legende...
-                  </div>
-                ) : (
-                  elektroLeaderboard.map((entry, idx) => (
-                    <div 
-                      key={entry.id || idx}
-                      className={`flex items-center p-1.5 rounded-xl border ${
-                        idx === 0 ? 'bg-yellow-500/10 border-yellow-500/40' :
-                        idx === 1 ? 'bg-slate-400/10 border-slate-400/30' :
-                        idx === 2 ? 'bg-amber-700/10 border-amber-700/30' :
-                        'bg-slate-950/60 border-slate-800'
-                      }`}
-                    >
-                      <div className={`w-6 h-6 rounded-full font-bold text-[11px] flex items-center justify-center mr-2 ${
-                        idx === 0 ? 'bg-yellow-500 text-slate-950' :
-                        idx === 1 ? 'bg-slate-300 text-slate-900' :
-                        idx === 2 ? 'bg-amber-600 text-white' :
-                        'bg-slate-800 text-slate-400'
-                      }`}>
-                        {idx + 1}
-                      </div>
-                      <div className="flex-1 min-w-0 mr-2">
-                        <p className="font-semibold text-white truncate text-xs">
-                          {entry.name}
-                        </p>
-                      </div>
-                      <div className="text-right flex items-center gap-2">
-                        <span className="text-sm font-bold text-blue-400">{entry.score}/11</span>
-                        <span className="text-xs font-mono text-slate-300 bg-slate-900 px-2 py-0.5 rounded">{entry.timeUsed}s</span>
-                      </div>
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
-
-            {/* Bygg Leaderboard (Matching Amber Info-box styling) */}
-            <div className="standquiz-leaderboard bg-amber-950/60 rounded-3xl p-5 border-2 border-amber-500/40 shadow-2xl flex flex-col">
-              <div className="flex items-center justify-between mb-3 pb-2 border-b border-amber-800/50">
-                <div className="flex items-center gap-2 text-amber-400">
-                  <TrophyIcon className="w-6 h-6 text-yellow-400" />
-                  <h2 className="text-lg font-bold text-white">🏆 Dagens faglige legender · Bygg & Statikk</h2>
-                </div>
-                <span className="text-xs font-mono text-amber-300 bg-amber-950 px-2.5 py-0.5 rounded-full border border-amber-700/50">
-                  Maks 12p
-                </span>
-              </div>
-
-              <div className="space-y-1 pr-1">
-                {byggLeaderboard.length === 0 ? (
-                  <div className="py-8 flex flex-col items-center justify-center text-slate-400 text-xs">
-                    <BuildingIcon className="w-8 h-8 mb-1 opacity-40" />
-                    Venter på dagens første brobyggermester...
-                  </div>
-                ) : (
-                  byggLeaderboard.map((entry, idx) => (
-                    <div 
-                      key={entry.id || idx}
-                      className={`flex items-center p-1.5 rounded-xl border ${
-                        idx === 0 ? 'bg-yellow-500/10 border-yellow-500/40' :
-                        idx === 1 ? 'bg-slate-400/10 border-slate-400/30' :
-                        idx === 2 ? 'bg-amber-700/10 border-amber-700/30' :
-                        'bg-slate-950/60 border-slate-800'
-                      }`}
-                    >
-                      <div className={`w-6 h-6 rounded-full font-bold text-[11px] flex items-center justify-center mr-2 ${
-                        idx === 0 ? 'bg-yellow-500 text-slate-950' :
-                        idx === 1 ? 'bg-slate-300 text-slate-900' :
-                        idx === 2 ? 'bg-amber-600 text-white' :
-                        'bg-slate-800 text-slate-400'
-                      }`}>
-                        {idx + 1}
-                      </div>
-                      <div className="flex-1 min-w-0 mr-2">
-                        <p className="font-semibold text-white truncate text-xs">
-                          {entry.name}
-                        </p>
-                      </div>
-                      <div className="text-right flex items-center gap-3">
-                        <span className="text-sm font-bold text-amber-400">{entry.score}/12</span>
-                        <span className="text-xs font-mono text-slate-300 bg-slate-900 px-2 py-0.5 rounded">
-                          {(entry.distanceMeters || 0).toFixed(1)}m
-                        </span>
-                      </div>
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
-
-          </div>
-
-          {/* RIGHT COLUMN: Bygg QR Code (Matching Amber Info-box styling) */}
-          <div className="lg:col-span-4 flex flex-col items-center">
-            <div className="standquiz-qr-card w-full bg-amber-950/60 rounded-3xl p-6 border-2 border-amber-500/40 shadow-2xl flex flex-col items-center text-center">
-              <div className="flex items-center gap-2 mb-2 text-amber-400 font-bold text-xl">
-                <BuildingIcon className="w-7 h-7" /> Bygg & Statikk
-              </div>
-              <p className="text-slate-200 text-sm mb-4 min-h-[32px]">
-                Skann for brobyggings- og bæreevnetesten
-              </p>
-              <div className="standquiz-qr-code bg-white p-4 rounded-2xl shadow-inner border-2 border-amber-500 mb-4 w-full flex justify-center">
-                <img src={byggQrUrl} alt="QR Bygg" className="w-60 h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 object-contain" />
-              </div>
-              <span className="text-xs font-mono text-amber-300 bg-amber-950 px-4 py-1.5 rounded-full border border-amber-800/50 font-semibold">
-                🏗️ Bygg-løype
-              </span>
-            </div>
-          </div>
-
-        </div>
+        <main className="stand-v2-grid">
+          {renderTrack('elektro')}
+          {renderTrack('bygg')}
+        </main>
       </div>
     );
   }
