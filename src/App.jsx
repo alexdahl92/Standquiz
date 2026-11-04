@@ -376,9 +376,9 @@ const APP_THEME_CSS = `
   .stand-v2-empty strong { color:#e2e8f0; font-size:18px; }
   .stand-v2-empty p { margin:6px 0 0; font-size:13px; }
   @media (min-width:1200px) and (min-height:760px) {
-    .stand-v2 { height:100vh; min-height:0; overflow:hidden; padding:20px 26px; }
-    .stand-v2-header { min-height:88px; height:88px; padding-bottom:12px; }
-    .stand-v2-grid { height:calc(100% - 108px); min-height:0; padding-top:18px; gap:18px; }
+    .stand-v2 { display:flex; flex-direction:column; box-sizing:border-box; height:100vh; min-height:0; overflow:hidden; padding:20px 26px; }
+    .stand-v2-header { box-sizing:border-box; flex:0 0 88px; min-height:88px; height:88px; padding-bottom:12px; }
+    .stand-v2-grid { flex:1 1 0; height:auto; min-height:0; padding-top:18px; gap:18px; }
     .stand-v2-track { min-height:0; height:100%; grid-template-columns:minmax(245px,.82fr) minmax(0,1.18fr); gap:14px; padding:16px; }
     .stand-v2-qr-frame { width:min(100%, min(330px, 34vh)); }
     .stand-v2-list { gap:7px; }
