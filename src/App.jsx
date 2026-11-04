@@ -501,6 +501,85 @@ const BRIDGE_DECKS = [
   { id: 'asphalt_steel', name: 'Asfaltert Ståldekke (Standard)', capMod: 1.05, weightMod: 1.05 }
 ];
 
+const pickOne = (items) => items[Math.floor(Math.random() * items.length)];
+
+const buildElektroFeedback = (answers) => {
+  const wrongSelected = ELEKTRO_SYSTEMS.filter(item => !item.isCorrect && answers[item.id]);
+  const missedCorrect = ELEKTRO_SYSTEMS.filter(item => item.isCorrect && !answers[item.id]);
+  const correctSelected = ELEKTRO_SYSTEMS.filter(item => item.isCorrect && answers[item.id]).length;
+  const errors = wrongSelected.length + missedCorrect.length;
+  const humor = errors === 0
+    ? ["Full klaff. Brannkonseptet kan få gå hjem litt tidligere.", "Imponerende. Du har tydeligvis lest mer enn møtereferatet.", "Alle riktige! ITB-koordinatoren fikk akkurat en rolig puls."]
+    : errors <= 2
+      ? ["Nesten helt i mål. Bare et par signaler gikk seg bort i systemskjemaet.", "Godt forsøk. Det gjenstår bare noen små avklaringer – klassisk prosjektering.", "Du er nær. Ett kort tverrfaglig møte burde holde."]
+      : ["Her hadde avviksmøtet blitt litt lengre enn planlagt.", "Brannmodus ble aktivert, men svarene tok en liten omvei via teknisk rom.", "Det er potensial her. La oss kalle det en tidligfase-leveranse."];
+  const details = [
+    ...wrongSelected.map(item => ({
+      ok: false,
+      label: item.label,
+      explanation: ({
+        coffee: "Vanlige stikkontakter til kaffetrakter er normalt ikke et system som skal styres av brannalarmen. Kaffepausen er ikke en brannfunksjon.",
+        snow_melt: "Utvendig gatevarme inngår normalt ikke i byggets brannstyringssekvens. Den kan fortsette å gjøre jobben sin uavhengig av brannalarmen.",
+        temp_control: "Vanlig temperaturregulering er ikke i seg selv en brannfunksjon. Det er ventilasjonens og øvrige brannstrategiske funksjoner som må håndteres etter brannkonseptet.",
+        sprinkler: "Sprinkleranlegget er et selvstendig slokkesystem som normalt aktiveres lokalt av varme – ikke et system som skal startes av brannalarmanlegget."
+      })[item.id] || "Dette systemet inngår normalt ikke som en generell styring fra brannalarmanlegget. Endelig funksjon må følge brannkonseptet."
+    })),
+    ...missedCorrect.map(item => ({
+      ok: false,
+      label: item.label,
+      explanation: ({
+        audio: "Talevarsling må kunne gi relevant evakueringsinformasjon ved brann, der dette er en del av byggets brannstrategi.",
+        transmitter: "Alarmsenderen formidler brannalarm videre til alarmmottak/sentral, når dette er prosjektert som del av løsningen.",
+        emergency_light: "Nødlys skal ivareta sikker rømning ved bortfall av normal belysning eller andre definerte hendelser. Brannalarm kan inngå i styringen av relevante funksjoner.",
+        music: "Bakgrunnsmusikk/lydanlegg må normalt dempes eller kobles ut slik at talevarsling og brannmeldinger ikke overdøves.",
+        door_access: "Adgangskontrollerte dører i rømningsveier må frigjøres eller settes i definert sikker tilstand slik at personer kan rømme.",
+        lighting: "Lysstyring kan måtte overstyres slik at rømningsveier og relevante arealer får nødvendig belysning.",
+        fire_curtain: "Branngardiner kan være del av brannseksjonering og må utløses/styres i henhold til brannstrategien.",
+        vent_unit: "Ventilasjonsaggregater kan måtte stoppe eller gå i særskilt brannmodus for å begrense røykspredning.",
+        fire_damper: "Brannspjeld må lukke eller styres i henhold til branncelle- og seksjoneringsstrategien.",
+        elevator: "Heiser skal normalt gå til definert plan og tas ut av vanlig bruk ved brann, med eventuelle unntak for brannmannsheis.",
+        smoke_vent: "Røykluker kan inngå i røykventilasjonen og må styres etter den prosjekterte brannstrategien."
+      })[item.id] || "Dette systemet kan ha en definert funksjon i brannstrategien og må inngå i riktig alarm-/styringssekvens."
+    }))
+  ];
+  return {
+    title: errors === 0 ? "Treffsikker brannmodus!" : errors <= 2 ? "Nesten samordnet!" : "Her trengs en tverrfaglig runde",
+    humor: pickOne(humor),
+    summary: `Du traff ${correctSelected} av ${ELEKTRO_SYSTEMS.filter(item => item.isCorrect).length} riktige systemer og hadde ${errors} avvik.`,
+    details
+  };
+};
+
+const buildByggFeedback = (distance, choices) => {
+  const details = [];
+  const design = BRIDGE_DESIGNS.find(item => item.id === choices.design);
+  const material = BRIDGE_MATERIALS.find(item => item.id === choices.material);
+  const support = BRIDGE_SUPPORTS.find(item => item.id === choices.support);
+  const deck = BRIDGE_DECKS.find(item => item.id === choices.deck);
+  if (design?.capacityFactor < 0.7) details.push({ok:false,label:"Bæresystem",explanation:"En enkel bjelkebro har lavere kapasitet i denne forenklede simuleringen enn fagverksalternativene. Fagverk kan føre krefter mer effektivt gjennom strekk og trykk i stavene."});
+  if (choices.design === "pratt_truss" && !choices.diagonals) details.push({ok:false,label:"Manglende diagonaler",explanation:"Uten diagonale strekkstag mister Pratt-fagverket en viktig del av lastveien og får betydelig redusert kapasitet i modellen."});
+  if (material?.capMod < 0.9) details.push({ok:false,label:"Materialvalg",explanation:`${material.name} er gitt lavere kapasitetsfaktor i denne modellen. Materialstyrke, stivhet, egenvekt og dimensjonering må vurderes samlet.`});
+  if (material?.weightMod > 1.2) details.push({ok:false,label:"Egenvekt",explanation:"Et tungt materiale øker konstruksjonens egenlast. Da går mer av kapasiteten med til å bære selve broen før trafikklasten kommer."});
+  if (support?.capMod === 1) details.push({ok:false,label:"Opplegg",explanation:"Fritt opplagt løsning har lavere kapasitetsfaktor enn fast innspenning eller midtpilar i denne forenklede modellen. Reelle opplegg må dimensjoneres for reaksjonskrefter og stabilitet."});
+  if (deck?.weightMod > 1.1) details.push({ok:false,label:"Dekke",explanation:"Det tunge samvirkedekket gir større egenlast. Det kan være en god løsning, men bæresystemet må dimensjoneres for vekten."});
+  if (choices.thickness < 30) details.push({ok:false,label:"Profiltykkelse",explanation:"Lav profiltykkelse reduserer kapasiteten i simuleringen. Større tverrsnitt kan øke bæreevnen, men gir også mer materialbruk og egenvekt."});
+  if (distance >= 12) {
+    return {
+      title: pickOne(["Broen holder – og det gjør du også.", "Godkjent for trafikk (i denne simuleringen).", "En sjelden sak uten behov for avklaringsmøte."]),
+      humor: pickOne(["Lastebilen kom over. RIB kan beholde kaffekoppen.", "Ingen dramatisk kollaps. Litt skuffende for publikum, svært bra for trafikksikkerheten.", "Du har levert en bro som holder. Nå gjenstår bare FDV-dokumentasjonen."]),
+      summary: "Kjøretøyet passerte hele spennet på 12 meter.",
+      details: details.length ? details : [{ok:true,label:"Konstruksjonen",explanation:"Valgene dine ga tilstrekkelig kapasitet i denne forenklede testen. I virkeligheten kreves full dimensjonering av blant annet brudd, bruksgrense, stabilitet, utmatting og fundamentering."}]
+    };
+  }
+  if (!details.length) details.push({ok:false,label:"Samlet bæreevne",explanation:"Kombinasjonen av last, spenn og konstruksjonskapasitet var ikke tilstrekkelig i simuleringen. Små endringer i flere parametere kan påvirke resultatet."});
+  return {
+    title: pickOne(["Broen ba om en omprosjektering.", "Det ble en kort brokarriere.", "Lastebilen må dessverre snu."]),
+    humor: pickOne(["Det blir en avviksrapport – og muligens en ny fergerute.", "Kollapsen var spektakulær. Prosjekteringsgrunnlaget var mindre imponerende.", "Vi foreslår en liten tverrfaglig gjennomgang før neste lastebilbestilling."]),
+    summary: `Broen sviktet etter ${distance.toFixed(1)} av 12 meter.`,
+    details
+  };
+};
+
 const INTRO_TEXTS = {
   elektro: "⚡ Brannalarm i et kontorbygg! Hvilke tekniske systemer mener du skal reagere? Tenk på hvordan bygget går i brannmodus – flere svar kan være riktige.",
   bygg: "🏗️ Brobyggermesteren: En 24-tonns lastebil skal over et 12 meter langt gjel. Velg bæresystem, materiale, opplegg, dekke og profiltykkelse. Klarer du å få bilen trygt over – eller blir det en spektakulær kollaps?"
@@ -872,6 +951,7 @@ export default function App() {
   const [finalScore, setFinalScore] = useState(0);
   const [finalTime, setFinalTime] = useState(0);
   const [finalDistance, setFinalDistance] = useState(0);
+  const [resultFeedback, setResultFeedback] = useState(null);
 
   // Bridge Simulator State (Bygg track)
   const [selectedDesign, setSelectedDesign] = useState('warren_truss');
@@ -1122,6 +1202,10 @@ export default function App() {
   };
 
   const sendResultToLeaderboard = async (score, timeUsed, distance) => {
+    const feedback = track === 'bygg'
+      ? buildByggFeedback(distance, { design: selectedDesign, material: selectedMaterial, support: selectedSupport, deck: selectedDeck, thickness: profileThickness, diagonals: includeDiagonals })
+      : buildElektroFeedback(selectedItems);
+    setResultFeedback(feedback);
     setFinalScore(score);
     setFinalTime(timeUsed);
     setFinalDistance(distance);
@@ -1451,9 +1535,25 @@ export default function App() {
           </div>
 
           <div>
-            <h2 className="text-2xl font-black text-white mb-1">Gratulerer, {participantName}!</h2>
-            <p className="text-xs text-slate-400">{track === 'bygg' ? (finalDistance >= 12 ? "Broa holder! Du kan kanskje søke jobb hos RIB." : "Det ble en kort karriere som broingeniør. Prøv igjen!") : "Resultatet er registrert på storskjermen. Klarer du å klatre på topplista?"}</p>
+            <h2 className="text-2xl font-black text-white mb-1">{resultFeedback?.title || `Gratulerer, ${participantName}!`}</h2>
+            <p className="text-sm text-amber-300 font-semibold">{resultFeedback?.humor}</p>
+            <p className="text-xs text-slate-400 mt-2">{resultFeedback?.summary}</p>
           </div>
+
+          {resultFeedback?.details?.length > 0 && (
+            <div className="text-left bg-slate-950/80 p-4 rounded-2xl border border-slate-800 space-y-3">
+              <h3 className="text-xs uppercase tracking-wider font-black text-slate-300">Faglig tilbakemelding</h3>
+              {resultFeedback.details.map((item, index) => (
+                <div key={index} className="flex gap-3 items-start">
+                  <span className={`mt-0.5 flex-shrink-0 font-black ${item.ok ? 'text-emerald-400' : 'text-amber-400'}`}>{item.ok ? '✓' : '!'}</span>
+                  <div>
+                    <p className="text-xs font-bold text-white">{item.label}</p>
+                    <p className="text-xs leading-relaxed text-slate-400">{item.explanation}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
 
           <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 grid grid-cols-2 gap-4">
             <div>
