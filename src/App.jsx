@@ -513,40 +513,16 @@ const buildElektroFeedback = (answers) => {
     : errors <= 2
       ? ["Nesten helt i mål. Bare et par signaler gikk seg bort i systemskjemaet.", "Godt forsøk. Det gjenstår bare noen små avklaringer – klassisk prosjektering.", "Du er nær. Ett kort tverrfaglig møte burde holde."]
       : ["Her hadde avviksmøtet blitt litt lengre enn planlagt.", "Brannmodus ble aktivert, men svarene tok en liten omvei via teknisk rom.", "Det er potensial her. La oss kalle det en tidligfase-leveranse."];
-  const details = [
-    ...wrongSelected.map(item => ({
-      ok: false,
-      label: item.label,
-      explanation: ({
-        coffee: "Vanlige stikkontakter til kaffetrakter er normalt ikke et system som skal styres av brannalarmen. Kaffepausen er ikke en brannfunksjon.",
-        snow_melt: "Utvendig gatevarme inngår normalt ikke i byggets brannstyringssekvens. Den kan fortsette å gjøre jobben sin uavhengig av brannalarmen.",
-        temp_control: "Vanlig temperaturregulering er ikke i seg selv en brannfunksjon. Det er ventilasjonens og øvrige brannstrategiske funksjoner som må håndteres etter brannkonseptet.",
-        sprinkler: "Sprinkleranlegget er et selvstendig slokkesystem som normalt aktiveres lokalt av varme – ikke et system som skal startes av brannalarmanlegget."
-      })[item.id] || "Dette systemet inngår normalt ikke som en generell styring fra brannalarmanlegget. Endelig funksjon må følge brannkonseptet."
-    })),
-    ...missedCorrect.map(item => ({
-      ok: false,
-      label: item.label,
-      explanation: ({
-        audio: "Talevarsling må kunne gi relevant evakueringsinformasjon ved brann, der dette er en del av byggets brannstrategi.",
-        transmitter: "Alarmsenderen formidler brannalarm videre til alarmmottak/sentral, når dette er prosjektert som del av løsningen.",
-        emergency_light: "Nødlys skal ivareta sikker rømning ved bortfall av normal belysning eller andre definerte hendelser. Brannalarm kan inngå i styringen av relevante funksjoner.",
-        music: "Bakgrunnsmusikk/lydanlegg må normalt dempes eller kobles ut slik at talevarsling og brannmeldinger ikke overdøves.",
-        door_access: "Adgangskontrollerte dører i rømningsveier må frigjøres eller settes i definert sikker tilstand slik at personer kan rømme.",
-        lighting: "Lysstyring kan måtte overstyres slik at rømningsveier og relevante arealer får nødvendig belysning.",
-        fire_curtain: "Branngardiner kan være del av brannseksjonering og må utløses/styres i henhold til brannstrategien.",
-        vent_unit: "Ventilasjonsaggregater kan måtte stoppe eller gå i særskilt brannmodus for å begrense røykspredning.",
-        fire_damper: "Brannspjeld må lukke eller styres i henhold til branncelle- og seksjoneringsstrategien.",
-        elevator: "Heiser skal normalt gå til definert plan og tas ut av vanlig bruk ved brann, med eventuelle unntak for brannmannsheis.",
-        smoke_vent: "Røykluker kan inngå i røykventilasjonen og må styres etter den prosjekterte brannstrategien."
-      })[item.id] || "Dette systemet kan ha en definert funksjon i brannstrategien og må inngå i riktig alarm-/styringssekvens."
-    }))
-  ];
+
+  const explanation = errors === 0
+    ? "Riktig! Brannalarmanlegget samvirker med funksjoner for varsling, rømning og røykbegrensning i tråd med byggets brannstrategi."
+    : `Brannalarmen skal normalt påvirke funksjoner som varsling, adgangskontroll, ventilasjon/røykstyring og nødlys. Du manglet ${missedCorrect.length} riktige funksjoner og valgte ${wrongSelected.length} system(er) som normalt ikke styres av brannalarmen.`;
+
   return {
     title: errors === 0 ? "Treffsikker brannmodus!" : errors <= 2 ? "Nesten samordnet!" : "Her trengs en tverrfaglig runde",
     humor: pickOne(humor),
     summary: `Du traff ${correctSelected} av ${ELEKTRO_SYSTEMS.filter(item => item.isCorrect).length} riktige systemer og hadde ${errors} avvik.`,
-    details
+    details: [{ ok: errors === 0, label: "Kort faglig oppsummering", explanation }]
   };
 };
 
@@ -1464,9 +1440,12 @@ export default function App() {
             <p className="text-xs text-slate-400">
               Tenk på byggets brannmodus. Huk av for alle systemer du mener skal påvirkes. Flere svar kan være riktige!
             </p>
+            <p className="text-[11px] font-bold text-blue-300 mt-3">
+              ↓ Bla nedover – det er flere svaralternativer under
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-2 max-h-[50vh] overflow-y-auto pr-1">
+          <div className="grid grid-cols-1 gap-2 pr-1">
             {ELEKTRO_SYSTEMS.map((item) => {
               const isSelected = !!selectedItems[item.id];
               return (
