@@ -400,6 +400,29 @@ const APP_THEME_CSS = `
     .stand-v2-track { grid-template-columns:1fr; min-height:0; }
     .stand-v2-qr-frame { width:min(100%,260px); }
   }
+
+  .stand-v2-task-description {
+    width:100%;
+    max-width:390px;
+    box-sizing:border-box;
+    margin-top:13px;
+    padding:11px 13px;
+    border-radius:12px;
+    font-size:clamp(12px,.82vw,15px);
+    line-height:1.4;
+    font-weight:550;
+    text-align:center;
+  }
+  .stand-v2-task-description.sky-description {
+    color:#dbeafe;
+    border:1px solid rgba(56,189,248,.25);
+    background:rgba(14,116,144,.14);
+  }
+  .stand-v2-task-description.amber-description {
+    color:#fef3c7;
+    border:1px solid rgba(245,158,11,.25);
+    background:rgba(146,64,14,.14);
+  }
 `;
 
 const NTFY_TOPIC = 'itb-bygg-stand-quiz-2026-v5';
@@ -1239,6 +1262,11 @@ export default function App() {
               <img src={qr} alt={'QR-kode for ' + title} />
             </div>
             <div className="stand-v2-scan">SKANN QR-KODEN · START UTFORDRINGEN</div>
+            <div className={isElektro ? 'stand-v2-task-description sky-description' : 'stand-v2-task-description amber-description'}>
+              {isElektro
+                ? 'Finn hvilke tekniske bygningssystemer som skal påvirkes eller gå i brannmodus når brannalarmen utløses. Velg alle riktige.'
+                : 'Bygg en bro ved å velge bæresystem, materiale, opplegg og dekke. Klarer den en 24-tonns lastebil over spennet?'}
+            </div>
           </div>
           {renderLeaderboard(isElektro ? elektroLeaderboard : byggLeaderboard, type)}
         </section>
