@@ -1238,6 +1238,7 @@ export default function App() {
   };
 
   const resetQuiz = () => {
+    setResultFeedback(null);
     setParticipantName('');
     setSelectedItems({});
     setTimeSeconds(0);
