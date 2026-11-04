@@ -1537,6 +1537,7 @@ export default function App() {
 
           <div>
             <h2 className="text-2xl font-black text-white mb-1">{resultFeedback?.title || `Gratulerer, ${participantName}!`}</h2>
+            <p className="text-xs text-slate-500 mb-2">Resultat for {participantName}</p>
             <p className="text-sm text-amber-300 font-semibold">{resultFeedback?.humor}</p>
             <p className="text-xs text-slate-400 mt-2">{resultFeedback?.summary}</p>
           </div>
