@@ -1435,7 +1435,7 @@ export default function App() {
         <div className="standquiz-panel bg-slate-900 p-5 rounded-3xl border border-slate-800 shadow-xl space-y-5">
           <div>
             <h2 className="text-base font-bold text-white mb-1">
-              Brannalarm i et kontorbygg – hvilke systemer reagerer?
+              Brannalarm – hvilke systemer reagerer?
             </h2>
             <p className="text-xs text-slate-400">
               Tenk på byggets brannmodus. Huk av for alle systemer du mener skal påvirkes. Flere svar kan være riktige!
