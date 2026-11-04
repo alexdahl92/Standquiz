@@ -82,6 +82,49 @@ const XIcon = ({ className = "w-5 h-5", color = "currentColor" }) => (
   </svg>
 );
 
+
+const APP_THEME_CSS = `
+  .standquiz-shell {
+    background-color: #050b18;
+    background-image: radial-gradient(ellipse at 50% -18%, rgba(37,99,235,.22), transparent 48%), radial-gradient(ellipse at 100% 55%, rgba(14,165,233,.08), transparent 35%);
+  }
+  .standquiz-shell button { -webkit-tap-highlight-color: transparent; }
+  .standquiz-shell button:not(:disabled) { transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background-color .18s ease; }
+  .standquiz-shell button:not(:disabled):hover { transform: translateY(-2px); }
+  .standquiz-shell button:not(:disabled):active { transform: translateY(0) scale(.985); }
+  .standquiz-screen { background-image: radial-gradient(ellipse at 50% -20%, rgba(37,99,235,.2), transparent 52%), linear-gradient(135deg,#050b18 0%,#0b1222 52%,#071426 100%); }
+  .standquiz-screen header { border-color: rgba(100,116,139,.35); }
+  .standquiz-screen .standquiz-intro {
+    background: linear-gradient(135deg,rgba(15,23,42,.96),rgba(15,23,42,.72));
+    border: 1px solid rgba(148,163,184,.24);
+    box-shadow: 0 22px 70px rgba(0,0,0,.28), inset 0 1px rgba(255,255,255,.04);
+  }
+  .standquiz-screen .standquiz-qr-card {
+    background: linear-gradient(155deg,rgba(15,35,67,.96),rgba(8,19,38,.96));
+    border-width: 1px;
+    box-shadow: 0 18px 55px rgba(0,0,0,.34), inset 0 1px rgba(255,255,255,.05);
+    transition: transform .22s ease, box-shadow .22s ease;
+  }
+  .standquiz-screen .standquiz-qr-card:hover { transform: translateY(-4px); box-shadow: 0 24px 65px rgba(0,0,0,.42),0 0 28px rgba(56,189,248,.10); }
+  .standquiz-screen .standquiz-qr-card img { image-rendering: pixelated; }
+  .standquiz-screen .standquiz-leaderboard {
+    background: linear-gradient(155deg,rgba(15,29,52,.98),rgba(8,16,32,.98));
+    border-width: 1px;
+    box-shadow: 0 18px 50px rgba(0,0,0,.3), inset 0 1px rgba(255,255,255,.04);
+  }
+  .standquiz-screen .standquiz-leaderboard h2 { letter-spacing: -.02em; }
+  .standquiz-mobile { background-image: radial-gradient(ellipse at 50% -12%,rgba(37,99,235,.22),transparent 48%),linear-gradient(160deg,#050b18,#0b1425 65%,#071426); }
+  .standquiz-mobile .standquiz-panel {
+    background: linear-gradient(150deg,rgba(15,27,48,.98),rgba(8,17,32,.98));
+    border-color: rgba(100,116,139,.32);
+    box-shadow: 0 20px 55px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.04);
+  }
+  .standquiz-mobile input:focus { box-shadow: 0 0 0 3px rgba(56,189,248,.12); }
+  @media (prefers-reduced-motion: reduce) {
+    .standquiz-shell *, .standquiz-shell *::before, .standquiz-shell *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+`;
+
 const NTFY_TOPIC = 'itb-bygg-stand-quiz-2026-v5';
 
 // ELEKTRO & ITB TASK LIST
@@ -834,7 +877,8 @@ export default function App() {
 
   if (mode === 'select') {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center p-6 font-sans">
+      <div className="standquiz-shell min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center p-6 font-sans">
+        <style>{APP_THEME_CSS}</style>
         <div className="bg-slate-900 p-8 rounded-3xl shadow-2xl max-w-md w-full border border-slate-800 text-center">
           <AlertTriangleIcon className="w-16 h-16 text-amber-500 mx-auto mb-6 animate-pulse" />
           <h1 className="text-3xl font-extrabold mb-2 text-white">NIRAS Stand-quiz</h1>
@@ -867,7 +911,8 @@ export default function App() {
 
   if (mode === 'screen') {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col p-6 font-sans overflow-x-hidden">
+      <div className="standquiz-shell standquiz-screen min-h-screen bg-slate-950 text-slate-100 flex flex-col p-6 font-sans overflow-x-hidden">
+        <style>{APP_THEME_CSS}</style>
         {/* Header with Prominent NIRAS Logo (No action buttons) */}
         <header className="flex flex-wrap items-center justify-between pb-6 border-b border-slate-800 mb-6 gap-4">
           <div className="flex items-center gap-6">
@@ -923,7 +968,7 @@ export default function App() {
         </header>
 
         {/* Explanatory Info Banner Top - High Legibility for Large Screen */}
-        <div className="mb-8 bg-slate-900/95 border-2 border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="standquiz-intro mb-8 bg-slate-900/95 border-2 border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="flex items-start gap-5 bg-blue-950/60 p-6 rounded-2xl border-2 border-blue-500/40 shadow-xl">
             <div className="p-4 bg-blue-500/20 rounded-2xl border border-blue-400/40 flex-shrink-0">
               <ZapIcon className="w-10 h-10 text-blue-400" />
@@ -958,7 +1003,7 @@ export default function App() {
           
           {/* LEFT COLUMN: Elektro QR Code */}
           <div className="lg:col-span-4 flex flex-col items-center">
-            <div className="w-full bg-blue-950/60 rounded-3xl p-6 border-2 border-blue-500/40 shadow-2xl flex flex-col items-center text-center">
+            <div className="standquiz-qr-card w-full bg-blue-950/60 rounded-3xl p-6 border-2 border-blue-500/40 shadow-2xl flex flex-col items-center text-center">
               <div className="flex items-center gap-2 mb-2 text-blue-400 font-bold text-xl">
                 <ZapIcon className="w-7 h-7" /> Elektro & ITB
               </div>
@@ -978,7 +1023,7 @@ export default function App() {
           <div className="lg:col-span-4 flex flex-col gap-6">
             
             {/* Elektro Leaderboard */}
-            <div className="bg-blue-950/60 rounded-3xl p-5 border-2 border-blue-500/40 shadow-2xl flex flex-col">
+            <div className="standquiz-leaderboard bg-blue-950/60 rounded-3xl p-5 border-2 border-blue-500/40 shadow-2xl flex flex-col">
               <div className="flex items-center justify-between mb-3 pb-2 border-b border-blue-800/50">
                 <div className="flex items-center gap-2 text-blue-400">
                   <TrophyIcon className="w-6 h-6 text-yellow-400" />
@@ -1030,7 +1075,7 @@ export default function App() {
             </div>
 
             {/* Bygg Leaderboard (Matching Amber Info-box styling) */}
-            <div className="bg-amber-950/60 rounded-3xl p-5 border-2 border-amber-500/40 shadow-2xl flex flex-col">
+            <div className="standquiz-leaderboard bg-amber-950/60 rounded-3xl p-5 border-2 border-amber-500/40 shadow-2xl flex flex-col">
               <div className="flex items-center justify-between mb-3 pb-2 border-b border-amber-800/50">
                 <div className="flex items-center gap-2 text-amber-400">
                   <TrophyIcon className="w-6 h-6 text-yellow-400" />
@@ -1087,7 +1132,7 @@ export default function App() {
 
           {/* RIGHT COLUMN: Bygg QR Code (Matching Amber Info-box styling) */}
           <div className="lg:col-span-4 flex flex-col items-center">
-            <div className="w-full bg-amber-950/60 rounded-3xl p-6 border-2 border-amber-500/40 shadow-2xl flex flex-col items-center text-center">
+            <div className="standquiz-qr-card w-full bg-amber-950/60 rounded-3xl p-6 border-2 border-amber-500/40 shadow-2xl flex flex-col items-center text-center">
               <div className="flex items-center gap-2 mb-2 text-amber-400 font-bold text-xl">
                 <BuildingIcon className="w-7 h-7" /> Bygg & Statikk
               </div>
@@ -1111,10 +1156,11 @@ export default function App() {
   const maxPossibleScore = track === 'bygg' ? 12 : 11;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col p-4 font-sans max-w-lg mx-auto relative">
+    <div className="standquiz-shell standquiz-mobile min-h-screen bg-slate-950 text-slate-100 flex flex-col p-4 font-sans max-w-lg mx-auto relative">
+      <style>{APP_THEME_CSS}</style>
       
       {/* Participant Header */}
-      <div className="bg-slate-900 p-4 rounded-2xl border border-slate-800 flex items-center justify-between mb-4 shadow-lg">
+      <div className="standquiz-panel bg-slate-900 p-4 rounded-2xl border border-slate-800 flex items-center justify-between mb-4 shadow-lg">
         <div className="flex items-center gap-3">
           {logoUrl ? (
             <img src={logoUrl} alt="NIRAS Logo" className="h-8 max-w-[120px] object-contain" />
@@ -1143,7 +1189,7 @@ export default function App() {
 
       {/* STEP 1: START SCREEN */}
       {step === 'start' && (
-        <div className="bg-slate-900 p-6 rounded-3xl border border-slate-800 shadow-xl space-y-6">
+        <div className="standquiz-panel bg-slate-900 p-6 rounded-3xl border border-slate-800 shadow-xl space-y-6">
           <div className="space-y-2">
             <h1 className="text-xl font-black text-white">Velkommen til standen!</h1>
             <p className="text-xs text-slate-300 leading-relaxed">
@@ -1176,7 +1222,7 @@ export default function App() {
 
       {/* STEP 2: QUIZ SCREEN */}
       {step === 'quiz' && track === 'elektro' && (
-        <div className="bg-slate-900 p-5 rounded-3xl border border-slate-800 shadow-xl space-y-5">
+        <div className="standquiz-panel bg-slate-900 p-5 rounded-3xl border border-slate-800 shadow-xl space-y-5">
           <div>
             <h2 className="text-base font-bold text-white mb-1">
               Brannalarm i et kontorbygg – hvilke systemer reagerer?
@@ -1250,7 +1296,7 @@ export default function App() {
 
       {/* STEP 3: RESULT SCREEN */}
       {step === 'result' && (
-        <div className="bg-slate-900 p-6 rounded-3xl border border-slate-800 shadow-2xl space-y-6 text-center">
+        <div className="standquiz-panel bg-slate-900 p-6 rounded-3xl border border-slate-800 shadow-2xl space-y-6 text-center">
           <div className="inline-flex p-4 bg-amber-500/10 rounded-full border border-amber-500/30 text-amber-400 mb-1">
             <TrophyIcon className="w-12 h-12" />
           </div>
