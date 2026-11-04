@@ -159,8 +159,8 @@ const BRIDGE_DECKS = [
 ];
 
 const INTRO_TEXTS = {
-  elektro: "Velkommen til Elektro- og ITB-oppgaven! Identifiser hvilke tekniske bygningssystemer som skal påvirkes eller reagere ved utløst brannalarm.",
-  bygg: "Velkommen til Brobyggings- og Statikkoppgaven! En 24-tonns lastebil skal krysse et 12-meters gjel. Velg bæresystem, materialtype, oppleggsbetingelser, dekketype og profiltykkelse for å sikre at bilen kjører helt over."
+  elektro: "⚡ Brannalarm i et kontorbygg! Hvilke tekniske systemer mener du skal reagere? Tenk på hvordan bygget går i brannmodus – flere svar kan være riktige.",
+  bygg: "🏗️ Brobyggermesteren: En 24-tonns lastebil skal over et 12 meter langt gjel. Velg bæresystem, materiale, opplegg, dekke og profiltykkelse. Klarer du å få bilen trygt over – eller blir det en spektakulær kollaps?"
 };
 
 function BridgeSimulator({
@@ -904,7 +904,7 @@ export default function App() {
 
             <div>
               {logoUrl && <h1 className="text-4xl font-black text-white tracking-tight">NIRAS STUDENTUTFORDRING</h1>}
-              <p className="text-slate-400 text-base mt-1">Velg fagfelt • Skann QR og konkurrer på kunnskap og dimensjonering!</p>
+              <p className="text-slate-400 text-base mt-1">Test faget, utfordre kollegaene og sett navnet ditt på dagens toppliste!</p>
             </div>
           </div>
 
@@ -982,7 +982,7 @@ export default function App() {
               <div className="flex items-center justify-between mb-3 pb-2 border-b border-blue-800/50">
                 <div className="flex items-center gap-2 text-blue-400">
                   <TrophyIcon className="w-6 h-6 text-yellow-400" />
-                  <h2 className="text-lg font-bold text-white">Toppliste Elektro & ITB</h2>
+                  <h2 className="text-lg font-bold text-white">🏆 Dagens faglige legender · Elektro & ITB</h2>
                 </div>
                 <span className="text-xs font-mono text-blue-300 bg-blue-950 px-2.5 py-0.5 rounded-full border border-blue-700/50">
                   Maks 11p
@@ -993,7 +993,7 @@ export default function App() {
                 {elektroLeaderboard.length === 0 ? (
                   <div className="py-8 flex flex-col items-center justify-center text-slate-400 text-xs">
                     <ZapIcon className="w-8 h-8 mb-1 opacity-40" />
-                    Venter på første elektro-deltaker...
+                    Venter på dagens første elektro-legende...
                   </div>
                 ) : (
                   elektroLeaderboard.map((entry, idx) => (
@@ -1034,7 +1034,7 @@ export default function App() {
               <div className="flex items-center justify-between mb-3 pb-2 border-b border-amber-800/50">
                 <div className="flex items-center gap-2 text-amber-400">
                   <TrophyIcon className="w-6 h-6 text-yellow-400" />
-                  <h2 className="text-lg font-bold text-white">Toppliste Bygg & Statikk</h2>
+                  <h2 className="text-lg font-bold text-white">🏆 Dagens faglige legender · Bygg & Statikk</h2>
                 </div>
                 <span className="text-xs font-mono text-amber-300 bg-amber-950 px-2.5 py-0.5 rounded-full border border-amber-700/50">
                   Maks 12p
@@ -1045,7 +1045,7 @@ export default function App() {
                 {byggLeaderboard.length === 0 ? (
                   <div className="py-8 flex flex-col items-center justify-center text-slate-400 text-xs">
                     <BuildingIcon className="w-8 h-8 mb-1 opacity-40" />
-                    Venter på første bygg-deltaker...
+                    Venter på dagens første brobyggermester...
                   </div>
                 ) : (
                   byggLeaderboard.map((entry, idx) => (
@@ -1179,10 +1179,10 @@ export default function App() {
         <div className="bg-slate-900 p-5 rounded-3xl border border-slate-800 shadow-xl space-y-5">
           <div>
             <h2 className="text-base font-bold text-white mb-1">
-              Hvilke systemer skal reagere ved utløst brannalarm?
+              Brannalarm i et kontorbygg – hvilke systemer reagerer?
             </h2>
             <p className="text-xs text-slate-400">
-              Huk av for alle systemer som skal påvirkes eller gå i brannmodus.
+              Tenk på byggets brannmodus. Huk av for alle systemer du mener skal påvirkes. Flere svar kan være riktige!
             </p>
           </div>
 
@@ -1257,7 +1257,7 @@ export default function App() {
 
           <div>
             <h2 className="text-2xl font-black text-white mb-1">Gratulerer, {participantName}!</h2>
-            <p className="text-xs text-slate-400">Ditt resultat er registrert på storskjermen.</p>
+            <p className="text-xs text-slate-400">{track === 'bygg' ? (finalDistance >= 12 ? "Broa holder! Du kan kanskje søke jobb hos RIB." : "Det ble en kort karriere som broingeniør. Prøv igjen!") : "Resultatet er registrert på storskjermen. Klarer du å klatre på topplista?"}</p>
           </div>
 
           <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 grid grid-cols-2 gap-4">
