@@ -114,148 +114,189 @@ const APP_THEME_CSS = `
   }
   .standquiz-screen .standquiz-leaderboard h2 { letter-spacing: -.02em; }
 
-  /* Keep the public stand display inside a 1920x1080 viewport. */
-  @media (min-width: 1024px) and (max-height: 1100px) {
+  /* Purpose-built layout for a 1920x1080 stand display. */
+  @media (min-width: 1200px) and (min-height: 760px) and (max-height: 1100px) {
     .standquiz-screen {
       height: 100vh;
       min-height: 0;
       overflow: hidden;
-      padding: 16px;
       box-sizing: border-box;
+      padding: 18px 24px;
+      gap: 0;
     }
     .standquiz-screen > header {
       flex: 0 0 auto;
+      flex-wrap: nowrap;
       padding-bottom: 12px;
-      margin-bottom: 12px;
-      gap: 12px;
+      margin-bottom: 14px;
+      gap: 18px;
     }
     .standquiz-screen > header > div:first-child {
-      gap: 16px;
+      min-width: 0;
+      gap: 18px;
     }
     .standquiz-screen > header img {
-      height: 76px;
+      height: 88px;
+      max-width: 360px;
       padding: 8px;
     }
     .standquiz-screen > header h1 {
-      font-size: 1.75rem;
+      font-size: clamp(1.6rem, 2vw, 2.25rem);
       line-height: 1.1;
     }
     .standquiz-screen > header p {
-      font-size: .875rem;
-      line-height: 1.25rem;
+      font-size: .95rem;
+      line-height: 1.35;
+    }
+    .standquiz-screen > header > div:last-child {
+      flex-wrap: nowrap;
+      flex-shrink: 0;
+      gap: 8px;
     }
     .standquiz-screen > header > div:last-child > div,
     .standquiz-screen > header > div:last-child > button {
-      padding: 8px 12px;
+      padding: 9px 13px;
+      white-space: nowrap;
     }
     .standquiz-screen .standquiz-intro {
       flex: 0 0 auto;
-      margin-bottom: 12px;
-      padding: 12px;
-      gap: 12px;
-      border-radius: 18px;
+      margin-bottom: 14px;
+      padding: 14px;
+      gap: 14px;
+      border-radius: 20px;
     }
     .standquiz-screen .standquiz-intro > div {
-      padding: 12px;
-      gap: 12px;
-      border-radius: 14px;
+      min-width: 0;
+      padding: 13px 16px;
+      gap: 13px;
+      border-radius: 15px;
     }
     .standquiz-screen .standquiz-intro > div > div:first-child {
-      padding: 10px;
+      padding: 11px;
     }
     .standquiz-screen .standquiz-intro svg {
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
     }
     .standquiz-screen .standquiz-intro h3 {
-      font-size: 1rem;
-      line-height: 1.25rem;
+      font-size: 1.05rem;
+      line-height: 1.3;
     }
     .standquiz-screen .standquiz-intro p {
-      font-size: .8125rem;
-      line-height: 1.2rem;
+      font-size: .84rem;
+      line-height: 1.35;
     }
     .standquiz-screen > .grid {
       flex: 1 1 0;
       min-height: 0;
-      gap: 12px;
+      gap: 16px;
       align-items: stretch;
+    }
+    .standquiz-screen > .grid > div {
+      min-height: 0;
     }
     .standquiz-screen .standquiz-qr-card {
       height: 100%;
       min-height: 0;
-      padding: 14px;
-      border-radius: 20px;
+      box-sizing: border-box;
+      padding: 18px 14px;
+      border-radius: 22px;
       justify-content: center;
     }
     .standquiz-screen .standquiz-qr-card > div:first-child {
-      font-size: 1rem;
-      margin-bottom: 6px;
+      font-size: 1.2rem;
+      margin-bottom: 8px;
     }
     .standquiz-screen .standquiz-qr-card > div:first-child svg {
-      width: 22px;
-      height: 22px;
+      width: 26px;
+      height: 26px;
     }
     .standquiz-screen .standquiz-qr-card > p {
-      margin-bottom: 8px;
+      margin-bottom: 12px;
       min-height: 0;
+      font-size: .85rem;
+      line-height: 1.35;
+    }
+    .standquiz-screen .standquiz-qr-code {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px;
+      margin-bottom: 12px;
+      border-radius: 16px;
+    }
+    .standquiz-screen .standquiz-qr-image {
+      display: block;
+      width: clamp(230px, 27vh, 300px);
+      height: clamp(230px, 27vh, 300px);
+      max-width: 100%;
+      object-fit: contain;
+    }
+    .standquiz-screen .standquiz-qr-card > span {
       font-size: .75rem;
     }
-    .standquiz-screen .standquiz-qr-card > div:nth-of-type(2) {
-      padding: 8px;
-      margin-bottom: 8px;
-      border-radius: 14px;
-    }
-    .standquiz-screen .standquiz-qr-card img {
-      width: min(22vh, 250px);
-      height: min(22vh, 250px);
+    .standquiz-screen > .grid > div:nth-child(2) {
+      gap: 12px;
     }
     .standquiz-screen .standquiz-leaderboard {
+      flex: 1 1 0;
       min-height: 0;
-      padding: 12px;
+      box-sizing: border-box;
+      padding: 12px 14px;
       border-radius: 20px;
     }
-    .standquiz-screen .standquiz-leaderboard h2 {
-      font-size: .9rem;
-      line-height: 1.2rem;
-    }
     .standquiz-screen .standquiz-leaderboard > div:first-child {
+      flex: 0 0 auto;
+      min-height: 34px;
       margin-bottom: 8px;
-      padding-bottom: 6px;
-      gap: 6px;
+      padding-bottom: 7px;
+      gap: 8px;
+    }
+    .standquiz-screen .standquiz-leaderboard h2 {
+      font-size: clamp(.8rem, .95vw, 1.05rem);
+      line-height: 1.25;
     }
     .standquiz-screen .standquiz-leaderboard > div:first-child svg {
-      width: 20px;
-      height: 20px;
-    }
-    .standquiz-screen .standquiz-leaderboard > div:first-child > span {
-      font-size: .65rem;
-    }
-    .standquiz-screen .standquiz-leaderboard > div:nth-child(2) {
-      min-height: 0;
-      gap: 3px;
-    }
-    .standquiz-screen .standquiz-leaderboard > div:nth-child(2) > div {
-      min-height: 27px;
-      padding: 3px 6px;
-      border-radius: 8px;
-    }
-    .standquiz-screen .standquiz-leaderboard > div:nth-child(2) > div > div:first-child {
       width: 21px;
       height: 21px;
-      margin-right: 6px;
+      flex-shrink: 0;
+    }
+    .standquiz-screen .standquiz-leaderboard > div:first-child > span {
+      flex-shrink: 0;
+      font-size: .68rem;
+    }
+    .standquiz-screen .standquiz-leaderboard-list {
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 4px;
+      min-height: 0;
+      overflow: visible;
+    }
+    .standquiz-screen .standquiz-leaderboard-list > div {
+      flex: 0 0 27px;
+      min-height: 27px;
+      box-sizing: border-box;
+      padding: 2px 7px;
+      border-radius: 8px;
+    }
+    .standquiz-screen .standquiz-leaderboard-list > div > div:first-child {
+      width: 21px;
+      height: 21px;
+      margin-right: 7px;
+      flex-shrink: 0;
       font-size: 10px;
     }
-    .standquiz-screen .standquiz-leaderboard > div:nth-child(2) p {
-      font-size: .7rem;
+    .standquiz-screen .standquiz-leaderboard-list p {
+      font-size: .75rem;
       line-height: 1rem;
     }
-    .standquiz-screen .standquiz-leaderboard > div:nth-child(2) span {
-      font-size: .7rem;
+    .standquiz-screen .standquiz-leaderboard-list span {
+      font-size: .75rem;
     }
-    .standquiz-screen .standquiz-leaderboard > div:nth-child(2) span:last-child {
-      padding: 1px 5px;
-      font-size: .65rem;
+    .standquiz-screen .standquiz-leaderboard-list span:last-child {
+      padding: 1px 6px;
+      font-size: .68rem;
     }
   }
   .standquiz-mobile { background-image: radial-gradient(ellipse at 50% -12%,rgba(37,99,235,.22),transparent 48%),linear-gradient(160deg,#050b18,#0b1425 65%,#071426); }
@@ -1155,8 +1196,8 @@ export default function App() {
               <p className="text-slate-200 text-sm mb-4 min-h-[32px]">
                 Skann for oppgave om brann- og bygningsautomasjon
               </p>
-              <div className="bg-white p-4 rounded-2xl shadow-inner border-2 border-blue-500 mb-4 w-full flex justify-center">
-                <img src={elektroQrUrl} alt="QR Elektro" className="w-60 h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 object-contain" />
+              <div className="standquiz-qr-code bg-white p-4 rounded-2xl shadow-inner border-2 border-blue-500 mb-4 w-full flex justify-center">
+                <img src={elektroQrUrl} alt="QR Elektro" className="standquiz-qr-image w-60 h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 object-contain" />
               </div>
               <span className="text-xs font-mono text-blue-300 bg-blue-950 px-4 py-1.5 rounded-full border border-blue-800/50 font-semibold">
                 ⚡ Elektro-løype
@@ -1179,7 +1220,7 @@ export default function App() {
                 </span>
               </div>
 
-              <div className="space-y-1 pr-1">
+              <div className="standquiz-leaderboard-list space-y-1 pr-1">
                 {elektroLeaderboard.length === 0 ? (
                   <div className="py-8 flex flex-col items-center justify-center text-slate-400 text-xs">
                     <ZapIcon className="w-8 h-8 mb-1 opacity-40" />
@@ -1284,7 +1325,7 @@ export default function App() {
               <p className="text-slate-200 text-sm mb-4 min-h-[32px]">
                 Skann for brobyggings- og bæreevnetesten
               </p>
-              <div className="bg-white p-4 rounded-2xl shadow-inner border-2 border-amber-500 mb-4 w-full flex justify-center">
+              <div className="standquiz-qr-code bg-white p-4 rounded-2xl shadow-inner border-2 border-amber-500 mb-4 w-full flex justify-center">
                 <img src={byggQrUrl} alt="QR Bygg" className="w-60 h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 object-contain" />
               </div>
               <span className="text-xs font-mono text-amber-300 bg-amber-950 px-4 py-1.5 rounded-full border border-amber-800/50 font-semibold">
