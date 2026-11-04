@@ -1034,7 +1034,7 @@ export default function App() {
                 </span>
               </div>
 
-              <div className="space-y-2 max-h-[220px] overflow-y-auto pr-1">
+              <div className="space-y-1 pr-1">
                 {elektroLeaderboard.length === 0 ? (
                   <div className="py-8 flex flex-col items-center justify-center text-slate-400 text-xs">
                     <ZapIcon className="w-8 h-8 mb-1 opacity-40" />
@@ -1044,14 +1044,14 @@ export default function App() {
                   elektroLeaderboard.map((entry, idx) => (
                     <div 
                       key={entry.id || idx}
-                      className={`flex items-center p-2.5 rounded-2xl border ${
+                      className={`flex items-center p-1.5 rounded-xl border ${
                         idx === 0 ? 'bg-yellow-500/10 border-yellow-500/40' :
                         idx === 1 ? 'bg-slate-400/10 border-slate-400/30' :
                         idx === 2 ? 'bg-amber-700/10 border-amber-700/30' :
                         'bg-slate-950/60 border-slate-800'
                       }`}
                     >
-                      <div className={`w-7 h-7 rounded-full font-bold text-xs flex items-center justify-center mr-2.5 ${
+                      <div className={`w-6 h-6 rounded-full font-bold text-[11px] flex items-center justify-center mr-2 ${
                         idx === 0 ? 'bg-yellow-500 text-slate-950' :
                         idx === 1 ? 'bg-slate-300 text-slate-900' :
                         idx === 2 ? 'bg-amber-600 text-white' :
@@ -1086,7 +1086,7 @@ export default function App() {
                 </span>
               </div>
 
-              <div className="space-y-2 max-h-[220px] overflow-y-auto pr-1">
+              <div className="space-y-1 pr-1">
                 {byggLeaderboard.length === 0 ? (
                   <div className="py-8 flex flex-col items-center justify-center text-slate-400 text-xs">
                     <BuildingIcon className="w-8 h-8 mb-1 opacity-40" />
@@ -1096,14 +1096,14 @@ export default function App() {
                   byggLeaderboard.map((entry, idx) => (
                     <div 
                       key={entry.id || idx}
-                      className={`flex items-center p-2.5 rounded-2xl border ${
+                      className={`flex items-center p-1.5 rounded-xl border ${
                         idx === 0 ? 'bg-yellow-500/10 border-yellow-500/40' :
                         idx === 1 ? 'bg-slate-400/10 border-slate-400/30' :
                         idx === 2 ? 'bg-amber-700/10 border-amber-700/30' :
                         'bg-slate-950/60 border-slate-800'
                       }`}
                     >
-                      <div className={`w-7 h-7 rounded-full font-bold text-xs flex items-center justify-center mr-2.5 ${
+                      <div className={`w-6 h-6 rounded-full font-bold text-[11px] flex items-center justify-center mr-2 ${
                         idx === 0 ? 'bg-yellow-500 text-slate-950' :
                         idx === 1 ? 'bg-slate-300 text-slate-900' :
                         idx === 2 ? 'bg-amber-600 text-white' :
